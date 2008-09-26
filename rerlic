@@ -1,0 +1,24 @@
+#!/usr/bin/ruby
+
+require 'fileutils'
+
+proj_name = ARGV.shift
+if proj_name.nil?
+  $stderr.puts "Need a project name"
+  exit
+end
+
+# set the home path
+Dir.mkdir proj_name
+PROJ_PATH = File.join(Dir.pwd, proj_name)
+RERLIC_PATH = "/home/wil/project/rerlic/" # hardcoded for now
+
+# create necessary directories
+%w{bin doc ebin include priv src lib}.each do |d|
+  Dir.mkdir(File.join(PROJ_PATH, d))
+end
+
+# copy the rake file
+FileUtils::copy(File.join(RERLIC_PATH, 'Rakefile'), 
+          File.join(PROJ_PATH, 'Rakefile'))
+
